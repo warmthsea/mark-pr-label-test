@@ -1,33 +1,16 @@
-name: PR Welcome
+name: Assign PR Author
+
 on:
   pull_request:
-    types: [opened, synchronize]
+    types: [opened]
 
 jobs:
-  pr-open-greeting:
+  assign-author:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions-cool/check-user-permission@v2
-        id: isTeamMember
+      - name: Assign PR author
+        uses: kentaro-m/auto-assign-action@v2.2.0
         with:
-          require: 'write'
-          username: ${{ github.event.pull_request.user.login }}
-
-      - uses: actions-awesome/pr-helper@1.1.1
-        with:
-          actions: 'add-assignees, add-reviewers, greeting, add-labels'
-          assignees: 'warmthsea'
-          reviewers: 'warmthsea'
-          labels: 'Contribution::Community'
-          token: ${{ github.token }}
-          pr-number: ${{ github.event.pull_request.number }}
-          greeting-message: 'Hello %user%, thank you for contributing to %repo%, please see our [guideline](%guideline%) to see how to make contribution'
-          greeting-guideline-address: 'https://github.com/warmthsea/mark-pr-label-test/blob/main/CONTRIBUTING.md'
-
-      - name: Add Assignees' Avatars
-        uses: peter-evans/create-or-update-comment@v2
-        with:
-          issue-number: ${{ github.event.pull_request.number }}
-          body: |
-            **Assignees:**
-            ${{ join(fromJson(steps.isTeamMember.outputs.assign-members), '\n - @') }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          assignees: ${{ github.event.pull_request.user.login }}
