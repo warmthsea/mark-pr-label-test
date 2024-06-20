@@ -19,8 +19,8 @@ jobs:
         if: steps.isTeamMember.outputs.require-result == 'false'
         with:
           actions: 'add-assignees, add-reviewers, greeting, add-labels'
-          assignees: 'element-plus/backers'
-          reviewers: 'element-plus/backers'
+          assignees: 'warmthsea/mark-pr-label-test'
+          reviewers: 'warmthsea/mark-pr-label-test'
           labels: 'Contribution::Community'
           token: ${{ github.token }}
           pr-number: ${{ github.event.pull_request.number }}
