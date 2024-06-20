@@ -25,7 +25,9 @@ jobs:
           greeting-guideline-address: 'https://github.com/warmthsea/mark-pr-label-test/blob/main/CONTRIBUTING.md'
 
       - name: Add Assignees' Avatars
-        uses: actions/add-assignees@v2
+        uses: peter-evans/create-or-update-comment@v2
         with:
           issue-number: ${{ github.event.pull_request.number }}
-          assignees: ${{ join(fromJson(steps.isTeamMember.outputs.assign-members), ', ') }}
+          body: |
+            **Assignees:**
+            ${{ join(fromJson(steps.isTeamMember.outputs.assign-members), '\n - @') }}
