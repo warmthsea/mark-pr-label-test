@@ -1,16 +1,12 @@
-name: Assign PR Author
-
+name: 'Auto Assign'
 on:
   pull_request:
-    types: [opened]
+    types: [opened, ready_for_review]
 
 jobs:
-  assign-author:
+  add-reviews:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Assign PR author
-        uses: kentaro-m/auto-assign-action@v2.2.0
+      - uses: kentaro-m/auto-assign-action@v2.0.0
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          assignees: ${{ github.event.pull_request.user.login }}
+          configuration-path: '.github/some_name_for_configs.yml' # Only needed if you use something other than .github/auto_assign.yml
